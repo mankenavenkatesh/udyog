@@ -8,7 +8,8 @@ contract Reputation{
         bytes32[] reqs;
         bytes32[] recs;
     }
-    
+
+    uint public num;    
     mapping(bytes32=>uint) _repo;
     mapping(bytes32=>Profile) status;
     mapping(bytes32=>string) _names;
@@ -116,6 +117,9 @@ contract Reputation{
         }
     }
     
+    function addNum(uint s) public {
+        num = s;
+    }
     function addUniv(bytes32 _id) public{
         _repo[_id]=50;
     }

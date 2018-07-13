@@ -11,6 +11,7 @@ class Home extends Component {
             <div className="login100-pic js-tilt" data-tilt>
               {/* <img src="images/img-01.png" alt="IMG" /> */}
               <img src="images/Udyog-2018.jpg" style={{marginLeft: 55}} />  
+              {/* <span style={{marginLeft: 145}}>Decentralized Resume</span> */}
             </div>
             
             <form className="login100-form validate-form">
@@ -28,6 +29,11 @@ class Home extends Component {
             </form>
           </div>
         </div>
+        <footer>
+        <p className="copyright">
+          Consensys India Hackathon  | Made with <i className="ion-heart" aria-hidden="true" /> by <a href="#" target="_blank">Codappa</a>
+        </p>
+      </footer>
       </div> 
     )
   }
