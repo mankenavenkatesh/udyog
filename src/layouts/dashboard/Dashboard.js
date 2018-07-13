@@ -6,6 +6,7 @@ class Dashboard extends Component {
     authData = this.props
   }
 
+  
   render() {
     return(
       <main className="container">
