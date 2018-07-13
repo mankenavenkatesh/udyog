@@ -8,17 +8,19 @@ contract Reputation{
         bytes32[] reqs;
         bytes32[] recs;
     }
-
-    uint public num;    
+    
     mapping(bytes32=>uint) _repo;
     mapping(bytes32=>Profile) status;
     mapping(bytes32=>string) _names;
     bytes32[] enrolled;
     mapping(uint=>mapping(bytes32=>uint)) skillScore;
-    mapping(string=>uint) skillNames;
+    mapping(string=>uint) skillIds;
+    mapping(uint=>bytes32[]) skillWiseaddr;
+    
     uint skillCtr;
     
-    event Requested(bytes32 indexed _id, string _name, string skill);
+    
+    event Requested(bytes32 indexed _id, string _name, string skill, bytes32 _to);
     event Recommended(bytes32 indexed _id, string _name);
     event Received(bytes32 indexed _id, string _from, bytes32 _fromId);
     event attested(bytes32 indexed _toId, bytes32 indexed _fromId);
@@ -27,19 +29,15 @@ contract Reputation{
         require(_from!=bytes32(0) && _to!=bytes32(0) && _from!=_to);
         //adding to request queue of recommender
         uint no;
-        if(skillNames[skill]==0 && skillCtr==0){
-            skillNames[skill]=skillCtr;
-             no=skillCtr;
+        if(skillIds[skill]==0 && skillCtr==0){
+            skillIds[skill]=skillCtr;
             skillCtr+=1;
-        }
-        else{
-           no=skillNames[skill]; 
         }
         bytes32[] _reqs=status[_to].reqs;
         _reqs.push(_from);
         status[_to].reqs=_reqs;
         status[_from].send-=1;
-        emit Requested(_from, _names[_from],skill);
+        emit Requested(_from, _names[_from],skill,_to);
         return true;
     }
     
@@ -75,8 +73,10 @@ contract Reputation{
        
        uint update=_repo[_from]*_percentage;
        update=update/100;
-       uint no=skillNames[skill];
+       uint no=skillIds[skill];
        skillScore[no][_to]+=update;
+      skillWiseaddr[no].push(_to);
+     
        _repo[_to]+=update;
        
        _repo[_from]+=_repo[_to]/100;
@@ -84,7 +84,7 @@ contract Reputation{
        bytes32[] rec=status[_to].recs;
        rec.push(_from);
        status[_to].recs=rec;
-       
+      
     
        status[_from].recommend-=1;
         
@@ -103,7 +103,6 @@ contract Reputation{
     function register(string name,uint repo,bytes32 _id) public{
         require(repo!=0 && _id!=bytes32(0));
         _repo[_id]=repo;
-        
          enrolled.push(_id);
          _names[_id]=name;
            
@@ -117,9 +116,6 @@ contract Reputation{
         }
     }
     
-    function addNum(uint s) public {
-        num = s;
-    }
     function addUniv(bytes32 _id) public{
         _repo[_id]=50;
     }
@@ -162,6 +158,38 @@ contract Reputation{
         return status[id].recs;
     }
     
+    function getSkillScore(bytes32 id, string skill) view public returns(uint){
+        return skillScore[skillIds[skill]][id];
+    }
+    function getSkillAddr(string skill) returns (bytes32[]){
+        return skillWiseaddr[skillIds[skill]];
+        
+    }
+    bytes32[] sortedArray;
+    
+    function sort_item(uint pos,uint no) internal returns (bool) {
+         sortedArray=skillWiseaddr[no];
+        uint w_min = pos;
+        for(uint i = pos;i < sortedArray.length;i++) {
+            if(skillScore[no][sortedArray[i]] < skillScore[no][sortedArray[w_min]]) {
+                w_min = i;
+            }
+        }
+        if(w_min == pos) return false;
+        bytes32 tmp = sortedArray[pos];
+        sortedArray[pos] = sortedArray[w_min];
+        sortedArray[w_min] = tmp;
+        return true;
+    }
+    
+ 
+    function sort(string skill) public returns(byte) {
+        uint no=skillIds[skill];
+        sortedArray=skillWiseaddr[no];
+        for(uint i = 0;i < sortedArray.length-1;i++) {
+            sort_item(i,no);
+        }
+    }
     
     
 }
