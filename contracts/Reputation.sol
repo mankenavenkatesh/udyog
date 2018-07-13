@@ -183,12 +183,13 @@ contract Reputation{
     }
     
  
-    function sort(string skill) public returns(byte) {
+    function sort(string skill) public returns(bytes32[]) {
         uint no=skillIds[skill];
         sortedArray=skillWiseaddr[no];
         for(uint i = 0;i < sortedArray.length-1;i++) {
             sort_item(i,no);
         }
+        return sortedArray;
     }
     
     
