@@ -7,11 +7,12 @@ class Dashboard extends Component {
     authData = this.props
   }
 
-  componentWillMount() {
-    udyog.addUniv().then((response) => {
-      console.log("add Univ callback-"+response);
-    });
-  }
+  // componentWillMount() {
+    
+  //   udyog.addUniv(this.props.authData.networkAddress).then((response) => {
+  //     console.log("add Univ callback-"+response);
+  //   });
+  // }
 
   render() {
     return(
