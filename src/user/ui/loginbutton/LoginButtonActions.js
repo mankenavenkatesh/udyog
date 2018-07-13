@@ -14,16 +14,10 @@ export function loginUser() {
     // UPort and its web3 instance are defined in ./../../../util/wrappers.
     // Request uPort persona of account passed via QR
     uport.requestCredentials({
-      requested: ['name', 'phone', 'country', 'class'],
+      requested: ['name', 'phone', 'country', 'degree'],
       notifications: true // We want this if we want to recieve credentials
     }).then((credentials) => {
-      dispatch(userLoggedIn(credentials))
-      console.log(credentials);
-      uport.attestCredentials({
-        sub: credentials.address,
-        claim: { 'class': '2stclass' },
-      })
-
+      dispatch(userLoggedIn(credentials));
       // Used a manual redirect here as opposed to a wrapper.
       // This way, once logged in a user can still access the home page.
       var currentLocation = browserHistory.getCurrentLocation()
