@@ -4,15 +4,16 @@ import udyog from './../../util/udyog.js'
 class Dashboard extends Component {
   constructor(props, { authData }) {
     super(props)
-    authData = this.props
+    authData = this.props;
+    
   }
 
-  // componentWillMount() {
+  componentWillMount() {
     
-  //   udyog.addUniv(this.props.authData.networkAddress).then((response) => {
-  //     console.log("add Univ callback-"+response);
-  //   });
-  // }
+    // udyog.addUniv(this.props.authData.networkAddress).then((response) => {
+    //   console.log("add Univ callback-"+response);
+    // });
+  }
 
   render() {
     return(
@@ -202,12 +203,12 @@ class Dashboard extends Component {
               <div className="education-wrapper">
                 <div className="education margin-b-50">
                   <h4><b>MASTER DEGREE IN SCIENCE</b></h4>
-                  <h5 className="font-yellow"><b>UCLA - SCIENCE AND ENGINEERING</b></h5>
-                  <h6 className="font-lite-black margin-t-10">GRADUATED IN MAY 2010(2 YEARS)</h6>
-                  <p className="margin-tb-30">Duis non volutpat arcu, eu mollis tellus. Sed finibus aliquam neque sit amet sodales. 
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla maximus pellentes que velit, 
-                    quis consequat nulla effi citur at. Maecenas sed massa tristique.Duis non volutpat arcu, 
-                    eu mollis tellus. Sed finibus aliquam neque sit amet sodales. </p>
+                  <h5 className="font-yellow"><b>BITS PILANI</b></h5>
+                  <h6 className="font-lite-black margin-t-10"></h6>
+                  <p className="margin-tb-30">Verified ID: {JSON.parse(this.props.authData.degreee).cid}<br />
+                  Enrolment: {JSON.parse(this.props.authData.degreee).to}<br />
+                  Graduation: {JSON.parse(this.props.authData.degreee).from} <br />
+                  </p>
                 </div>{/* education */}
                 <div className="education margin-b-50">
                   <h4><b>COURSE ON COMPUTER SCIENCE</b></h4>
