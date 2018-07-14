@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
+import udyog from './util/udyog'
 
 // UI Components
 import LoginButtonContainer from './user/ui/loginbutton/LoginButtonContainer'
@@ -13,6 +14,15 @@ import './css/pure-min.css'
 import './App.css'
 
 class App extends Component {
+
+
+  componentWillMount() {
+    console.log("udyog object-"+udyog);
+    udyog.init().then((instance) => {
+      console.log("Rep contract instance -"+instance);
+    });
+  }
+
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <span>

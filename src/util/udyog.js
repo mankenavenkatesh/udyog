@@ -1,4 +1,3 @@
-
 import contract from 'truffle-contract'
 import Reputation from './../../build/contracts/Reputation.json'
 // import uport from './connectors'
@@ -25,7 +24,7 @@ const  udyog= {
 
       self.web3 = uport.getWeb3();
       self.contract = contract(Reputation)
-    self.contract.setProvider(self.web3.currentProvider)  
+    self.contract.setProvider(self.web3.currentProvider)
       self.contract.deployed().then(instance => {
         self.instance = instance
         resolve(instance)
@@ -33,7 +32,7 @@ const  udyog= {
         reject(err)
       })
     })
-  }, 
+  },
 
   setAccount : function (networkAddress) {
     let self = this;
@@ -43,7 +42,81 @@ const  udyog= {
   addUniv : function () {
     let self = this;
     return self.instance.addNum(3, {from : self.account});
+  },
+
+  attest : function (_to,_from) {
+    let self = this;
+    return self.instance.attest(_to, _from, {from : self.account});
+  },
+  getSkillAddress : function (_skill) {
+    let self = this;
+    return self.instance.addNum(3, {from : self.account});
+  },
+  refillTokens : function () {
+    let self = this;
+    return self.instance.addNum(3, {from : self.account});
+  },
+
+  sort : function (_skill) {
+    let self = this;
+    return self.instance.addNum(3, {from : self.account});
+  },
+  updateRepo : function (id,repo) {
+    let self = this;
+    return self.instance.updateRepo(id,parseInt(repo),{from : self.account});
+  },
+
+  getName: function (_id) {
+    let self = this;
+    return self.instance.addNum(3, {from : self.account});
+  },
+  getRequests : function (_id) {
+    let self = this;
+    return self.instance.addNum(3, {from : self.account});
+  },
+  getRecommendations : function (_id) {
+    let self = this;
+    return self.instance.addNum(3, {from : self.account});
+  },
+  getTestFunc: function(){
+    let self = this;
+    return self.instance.getTest({from: self.account});
+  },
+
+  addTestFunc: function(_val){
+    let self = this;
+    return self.instance.addTest(parseInt(_val),{from: self.account});
+  },
+  getRepo: function (_id) {
+    let self = this;
+    return self.instance.getRepo(_id, {from : self.account});
+  },
+  getSkillScore : function (_id,_skill) {
+    let self = this;
+    return self.instance.addNum(3, {from : self.account});
+  },
+
+  register : function (_name,_repo,_id) {
+    let self = this;
+    return self.instance.addNum(3, {from : self.account});
+  },
+
+  requestRecommendation : function (_from,_to,_skill) {
+    let self = this;
+    return self.instance.addNum(3, {from : self.account});
+  },
+
+  recommend : function (_to,_from,_percentage,_skill) {
+    let self = this;
+    return self.instance.addNum(3, {from : self.account});
+  },
+  listenEvents: function() {
+    let self = this;
+    return self.instance.allPastEvents("Requested");
   }
+
+
+
 }
 
 export default udyog
